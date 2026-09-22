@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alaska Pastors Map</title>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #173042;
+}
+
+#app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+header {
+  padding: 14px 18px;
+  background: white;
+  border-bottom: 1px solid #d9e2e8;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.subtitle {
+  margin-top: 5px;
+  color: #647582;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  min-height: 0;
+}
+
+#map {
+  height: 100%;
+  min-height: 600px;
+}
+
+.sidebar {
+  overflow: auto;
+  padding: 14px;
+  background: #f6f8fa;
+  border-left: 1px solid #d9e2e8;
+}
+
+.detail, .church {
+  background: white;
+  border: 1px solid #d9e2e8;
+  border-radius: 12px;
+  padding: 13px;
+  margin-bottom: 10px;
+}
+
+.detail h2 {
+  margin: 0 0 7px;
+}
+
+.church {
+  cursor: pointer;
+}
+
+.church:hover {
+  background: #eef6fa;
+}
+
+.church strong {
+  display: block;
+}
+
+.church span {
+  display: block;
+  margin-top: 3px;
+  color: #657784;
+  font-size: 13px;
+}
+
+.website {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 13px;
+  border-radius: 8px;
+  background: #0b4f7c;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.zoom-button {
+  padding: 9px 11px;
+  border: 0;
+  border-radius: 7px;
+  background: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 1px 5px rgba(0,0,0,.35);
+}
+
+@media (max-width: 760px) {
+  main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60vh auto;
+  }
+
+  #map {
+    min-height: 0;
+  }
+
+  .sidebar {
+    border-left: 0;
+    border-top: 1px solid #d9e2e8;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+<header>
+  <h1>Alaska Pastors Map</h1>
+  <div class="subtitle">
+    Click a church marker for pastor, church, city and website.
+    Drag the map and use +/− or your mouse wheel to zoom.
+  </div>
+</header>
+
+<main>
+
+<div id="map"></div>
+
+<aside class="sidebar">
+
+<div id="detail" class="detail">
+  <h2>Select a Church</h2>
+  <div>Click a marker on the map or a church name below.</div>
+</div>
+
+<div id="churchList"></div>
+
+</aside>
+
+</main>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+const churches = [
+
+{
+  pastor: "Mark Zweifel",
+  church: "True North Church",
+  city: "Fairbanks",
+  address: "3295 College Road, Fairbanks, AK 99709",
+  website: "https://church.truenorthak.org/",
+  lat: 64.8566,
+  lng: -147.8125
+},
+
+{
+  pastor: "Ron Hoffman",
+  church: "Mountain City Church",
+  city: "Anchorage",
+  address: "6401 E Northern Lights Blvd, Anchorage, AK 99504",
+  website: "https://mountaincity.church/",
+  lat: 61.1957,
+  lng: -149.7685
+},
+
+{
+  pastor: "Jon Watson",
+  church: "Peninsula Christian Center",
+  city: "Soldotna",
+  address: "161 Farnsworth Blvd, Soldotna, AK 99669",
+  website: "https://www.penccalaska.org/",
+  lat: 60.4865,
+  lng: -151.0583
+},
+
+{
+  pastor: "Gabriel Webb",
+  church: "Response Church",
+  city: "Anchorage",
+  address: "630 E 5th Avenue, Anchorage, AK 99501",
+  website: "https://www.responsechurch.org/",
+  lat: 61.2177,
+  lng: -149.8734
+},
+
+{
+  pastor: "Prince Nwankudu",
+  church: "God's Family Church",
+  city: "Anchorage",
+  address: "4317 MacInnes Street, Anchorage, AK 99508",
+  website: "https://www.godsfamilyalaska.org/",
+  lat: 61.1818,
+  lng: -149.8098
+},
+
+{
+  pastor: "Victor Fonov",
+  church: "White Fields Church",
+  city: "Wasilla",
+  address: "4800 E Palmer-Wasilla Highway, Wasilla, AK 99654",
+  website: "https://www.whitefieldsalaska.com/",
+  lat: 61.5820,
+  lng: -149.3310
+}
+
+];
+
+const map = L.map("map", {
+  zoomControl: true
+}).setView([63.2, -151.0], 4);
+
+L.tileLayer(
+  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+  {
+    maxZoom: 19,
+    attribution:
+      '&copy; OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team'
+  }
+).addTo(map);
+
+const markers = [];
+
+function showChurch(index, zoomToChurch = false) {
+
+  const c = churches[index];
+
+  document.getElementById("detail").innerHTML = `
+    <h2>${c.church}</h2>
+    <div><strong>Pastor ${c.pastor}</strong></div>
+    <div>${c.city}, Alaska</div>
+    <div style="margin-top:7px;color:#657784;font-size:13px;">
+      ${c.address}
+    </div>
+    <a
+      class="website"
+      href="${c.website}"
+      target="_blank"
+      rel="noopener noreferrer">
+      Visit Church Website
+    </a>
+  `;
+
+  if (zoomToChurch) {
+    map.flyTo(
+      [c.lat, c.lng],
+      c.city === "Anchorage" ? 14 : 11,
+      { duration: 0.8 }
+    );
+  }
+
+  markers[index].openPopup();
+}
+
+churches.forEach((c, index) => {
+
+  const marker = L.marker([c.lat, c.lng])
+    .addTo(map)
+    .bindPopup(`
+      <strong>${c.church}</strong><br>
+      Pastor ${c.pastor}<br>
+      ${c.city}, Alaska<br><br>
+      <a href="${c.website}" target="_blank" rel="noopener noreferrer">
+        Visit website
+      </a>
+    `);
+
+  marker.on("click", function() {
+    showChurch(index, false);
+  });
+
+  markers.push(marker);
+
+  const card = document.createElement("div");
+
+  card.className = "church";
+
+  card.innerHTML = `
+    <strong>${c.church}</strong>
+    <span>Pastor ${c.pastor} · ${c.city}</span>
+  `;
+
+  card.onclick = function() {
+    showChurch(index, true);
+  };
+
+  document.getElementById("churchList").appendChild(card);
+
+});
+
+const anchorageMarkers = churches
+  .map((church, index) =>
+    church.city === "Anchorage" ? markers[index] : null
+  )
+  .filter(Boolean);
+
+const anchorageGroup = L.featureGroup(anchorageMarkers);
+
+const anchorageControl = L.control({
+  position: "topleft"
+});
+
+anchorageControl.onAdd = function() {
+
+  const container = L.DomUtil.create("div");
+
+  container.innerHTML =
+    '<button class="zoom-button">Zoom to Anchorage Churches</button>';
+
+  L.DomEvent.disableClickPropagation(container);
+
+  container.onclick = function() {
+
+    map.fitBounds(
+      anchorageGroup.getBounds().pad(0.35),
+      {
+        maxZoom: 13
+      }
+    );
+
+  };
+
+  return container;
+};
+
+anchorageControl.addTo(map);
+
+</script>
+
+</body>
+</html>
