@@ -12,17 +12,29 @@
 
 <style>
 html, body {
-  height: 100%;
+  min-height: 100%;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   color: #173042;
 }
 
-#app {
-  height: 100%;
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
+#app { min-height: 100vh; }
+
+.resource-wrap { padding: 18px; background:#f6f8fa; }
+.resource-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; max-width:1200px; margin:0 auto; }
+.resource-card { background:white; border:1px solid #d9e2e8; border-radius:12px; padding:16px; }
+.resource-card h2 { margin:0 0 8px; font-size:19px; }
+.resource-card p { margin:0; color:#647582; line-height:1.45; }
+.resource-card a { color:#0b4f7c; font-weight:bold; }
+.section-title { max-width:1200px; margin:0 auto 12px; }
+.map-heading { padding:18px 18px 8px; background:white; }
+.map-heading h2 { max-width:1200px; margin:0 auto; }
+.map-layout { height:680px; display:grid; grid-template-columns:1fr 340px; min-height:0; }
+.contact-box { max-width:1200px; margin:18px auto; background:#173042; color:white; border-radius:12px; padding:18px; }
+.contact-box h2 { margin:0 0 8px; }
+.contact-box a { color:white; font-weight:bold; }
+.disclosure { max-width:1200px; margin:18px auto 28px; padding:16px; border:2px solid #173042; background:white; font-size:12px; line-height:1.45; font-weight:bold; }
+.brand { max-width:1200px; margin:0 auto 12px; font-weight:bold; letter-spacing:.04em; color:#0b4f7c; }
 
 header {
   padding: 14px 18px;
@@ -40,11 +52,7 @@ h1 {
   color: #647582;
 }
 
-main {
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  min-height: 0;
-}
+main { min-height:0; }
 
 #map {
   height: 100%;
@@ -111,7 +119,8 @@ main {
 }
 
 @media (max-width: 760px) {
-  main {
+  .map-layout {
+    height:auto;
     grid-template-columns: 1fr;
     grid-template-rows: 60vh auto;
   }
@@ -141,20 +150,37 @@ main {
 </header>
 
 <main>
+<section class="resource-wrap">
+  <div class="brand">UNION OF CHRIST INITIATIVE</div>
+  <h2 class="section-title">Pastor Election Resource Center</h2>
+  <div class="resource-grid">
+    <div class="resource-card"><h2>Legal Information for Pastors</h2><p>Federal tax-law information concerning individual activity by religious leaders and the rules that apply to 501(c)(3) churches. <a href="https://www.irs.gov/pub/irs-pdf/p1828.pdf" target="_blank" rel="noopener noreferrer">IRS Publication 1828</a></p></div>
+    <div class="resource-card"><h2>Sermon & Teaching Resources</h2><p>A place for submitted sermons, outlines, Scripture references and teaching resources concerning faith, citizenship and civic participation.</p></div>
+    <div class="resource-card"><h2>Pastors in Their Own Words</h2><p>A place for submitted quotations and videos from pastors, with the speaker and context clearly identified.</p></div>
+    <div class="resource-card"><h2>Submitted Pastor Materials</h2><p>A place to display materials submitted by individual pastors, including personal statements and sample materials, with authorship clearly identified.</p></div>
+    <div class="resource-card"><h2>Election Information</h2><p>A place for official election dates, voter-registration information, polling-place information and other factual election resources.</p></div>
+    <div class="resource-card"><h2>FAQ</h2><p>Answers and source links concerning individual political activity by religious leaders and federal tax rules applicable to churches.</p></div>
+  </div>
+</section>
 
-<div id="map"></div>
-
-<aside class="sidebar">
-
-<div id="detail" class="detail">
-  <h2>Select a Church</h2>
-  <div>Click a marker on the map or a church name below.</div>
+<section class="map-heading"><h2>Pastor Map</h2></section>
+<div class="map-layout">
+  <div id="map"></div>
+  <aside class="sidebar">
+    <div id="detail" class="detail"><h2>Select a Church</h2><div>Click a marker on the map or a church name below.</div></div>
+    <div id="churchList"></div>
+  </aside>
 </div>
 
-<div id="churchList"></div>
-
-</aside>
-
+<section class="resource-wrap">
+  <div class="contact-box">
+    <h2>Questions?</h2>
+    <div>Jim Minnery, President, Alaska Family Action, Inc.</div>
+    <div style="margin-top:7px;"><a href="tel:+19073177268">907-317-7268</a></div>
+    <div style="margin-top:5px;">Email contact will be added here.</div>
+  </div>
+  <div class="disclosure">THIS COMMUNICATION WAS PAID FOR BY ALASKA FAMILY ACTION, INC., ANCHORAGE, ALASKA. I AM JIM MINNERY, PRESIDENT OF ALASKA FAMILY ACTION, INC., AND I APPROVE THIS MESSAGE. THIS NOTICE TO VOTERS IS REQUIRED BY ALASKA LAW. WE CERTIFY THAT THIS COMMUNICATION IS NOT AUTHORIZED, PAID FOR, OR APPROVED BY ANY CANDIDATE BEING ENDORSED. WWW.AKFAMILY.ORG. 907-279-2825</div>
+</section>
 </main>
 </div>
 
