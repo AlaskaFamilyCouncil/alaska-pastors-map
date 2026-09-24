@@ -38,7 +38,9 @@ html, body {
 .contact-box h2 { margin:0 0 8px; }
 .contact-box a { color:white; font-weight:bold; }
 .disclosure { max-width:1200px; margin:18px auto 28px; padding:16px; border:2px solid #173042; background:white; font-size:12px; line-height:1.45; font-weight:bold; }
-.brand { max-width:1200px; margin:0 auto 16px; } .brand img { display:block; max-width:320px; width:100%; height:auto; border-radius:8px; }
+.brand { max-width:1200px; margin:0 auto 24px; }
+.brand img { display:block; width:100%; max-width:none; height:180px; object-fit:cover; object-position:center 52%; border-radius:0; }
+@media (max-width:700px) { .brand img { height:120px; } }
 
 header {
   padding: 14px 18px;
