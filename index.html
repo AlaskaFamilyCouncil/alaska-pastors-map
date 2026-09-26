@@ -4,22 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Union of Christ Initiative</title>
-
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-html, body {
-  min-height: 100%;
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #173042;
-}
-
-#app { min-height: 100vh; }
-
+html, body { min-height:100%; margin:0; font-family:Arial,Helvetica,sans-serif; color:#173042; }
+#app { min-height:100vh; }
 .resource-wrap { padding:18px; background:#f6f8fa; }
 .top-resource-layout { max-width:1200px; margin:0 auto; display:block; }
 .top-resource-main { min-width:0; }
@@ -30,10 +18,11 @@ html, body {
 .pastor-feature-row .pastor-feature .attribution { grid-column:2; margin-top:-6px; }
 @media (max-width:700px) { .pastor-feature-row .pastor-feature { grid-template-columns:1fr; } .pastor-feature-row .pastor-feature img { width:180px; } .pastor-feature-row .pastor-feature .attribution { grid-column:1; } }
 .top-resource-main .brand, .top-resource-main .section-title, .top-resource-main .resource-grid { max-width:none; }
-
 .resource-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; max-width:1200px; margin:0 auto; }
 .resource-card { background:white; border:1px solid #d9e2e8; border-radius:12px; padding:16px; }
-.resource-card h2 { margin:0 0 8px; font-size:19px; } .resource-icon { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:#0b4f7c; color:#f3c25b; font-size:26px; margin-bottom:12px; } .article-callout { max-width:1200px; margin:22px auto 6px; background:#0b4f7c; border:4px solid #c28a1a; border-radius:14px; padding:24px 28px; box-shadow:0 6px 18px rgba(0,0,0,.20); text-align:center; }
+.resource-card h2 { margin:0 0 8px; font-size:19px; }
+.resource-icon { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:#0b4f7c; color:#f3c25b; font-size:26px; margin-bottom:12px; }
+.article-callout { max-width:1200px; margin:22px auto 6px; background:#0b4f7c; border:4px solid #c28a1a; border-radius:14px; padding:24px 28px; box-shadow:0 6px 18px rgba(0,0,0,.20); text-align:center; }
 .article-callout .article-label { color:#f3c25b; font-size:14px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; margin-bottom:9px; }
 .article-callout a { color:white; font-size:26px; line-height:1.25; font-weight:800; text-decoration:none; display:block; }
 .article-callout .read-more { display:inline-block; margin-top:13px; padding:8px 16px; border-radius:999px; background:#f3c25b; color:#173042; font-weight:800; font-size:14px; }
@@ -51,418 +40,85 @@ html, body {
 .brand { max-width:1200px; margin:0 auto 24px; }
 .brand img { display:block; width:100%; height:auto; max-width:100%; border-radius:0; object-fit:contain; }
 @media (max-width:700px) { .brand img { width:100%; height:auto; } }
-
-header {
-  padding: 14px 18px;
-  background: white;
-  border-bottom: 1px solid #d9e2e8;
-}
-
-h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.subtitle {
-  margin-top: 5px;
-  color: #647582;
-}
-
+header { padding:14px 18px; background:white; border-bottom:1px solid #d9e2e8; }
+h1 { margin:0; font-size:28px; }
+.subtitle { margin-top:5px; color:#647582; }
 main { min-height:0; }
-
-#map {
-  height: 100%;
-  min-height: 600px;
-}
-
-.sidebar {
-  overflow: auto;
-  padding: 14px;
-  background: #f6f8fa;
-  border-left: 1px solid #d9e2e8;
-}
-
-.detail, .church {
-  background: white;
-  border: 1px solid #d9e2e8;
-  border-radius: 12px;
-  padding: 13px;
-  margin-bottom: 10px;
-}
-
-.detail h2 {
-  margin: 0 0 7px;
-}
-
-#detail.pastor-count-box {
-  background: #0b4f7c;
-  color: white;
-  border: 3px solid #c28a1a;
-  box-shadow: 0 4px 12px rgba(0,0,0,.18);
-  text-align: center;
-  padding: 18px 12px;
-}
-
-#detail.pastor-count-box h2 {
-  color: white;
-  font-size: 22px;
-  margin-bottom: 8px;
-}
-
-.pastor-count {
-  font-size: 42px;
-  line-height: 1;
-  font-weight: 800;
-  color: #f3c25b;
-  margin: 6px 0;
-}
-
-.pastor-count-label {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  opacity: .92;
-}
-
-.pastor-feature {
-  background:white;
-  border:1px solid #d9e2e8;
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:14px;
-}
+#map { height:100%; min-height:600px; }
+.sidebar { overflow:auto; padding:14px; background:#f6f8fa; border-left:1px solid #d9e2e8; }
+.detail, .church { background:white; border:1px solid #d9e2e8; border-radius:12px; padding:13px; margin-bottom:10px; }
+.detail h2 { margin:0 0 7px; }
+#detail.pastor-count-box { background:#0b4f7c; color:white; border:3px solid #c28a1a; box-shadow:0 4px 12px rgba(0,0,0,.18); text-align:center; padding:18px 12px; }
+#detail.pastor-count-box h2 { color:white; font-size:22px; margin-bottom:8px; }
+.pastor-count { font-size:42px; line-height:1; font-weight:800; color:#f3c25b; margin:6px 0; }
+.pastor-count-label { font-size:13px; text-transform:uppercase; letter-spacing:.08em; opacity:.92; }
+.pastor-feature { background:white; border:1px solid #d9e2e8; border-radius:12px; padding:12px; margin-bottom:14px; }
 .pastor-feature img { width:100%; height:auto; display:block; border-radius:8px; margin-bottom:12px; }
 .pastor-feature blockquote { margin:0; font-family:Georgia,serif; font-size:14px; line-height:1.5; color:#263b49; }
 .pastor-feature blockquote p { margin:0 0 10px; }
 .pastor-feature .attribution { margin-top:12px; font-weight:700; line-height:1.4; color:#173042; }
-
-.church {
-  cursor: pointer;
-}
-
-.church:hover {
-  background: #eef6fa;
-}
-
-.church strong {
-  display: block;
-}
-
-.church span {
-  display: block;
-  margin-top: 3px;
-  color: #657784;
-  font-size: 13px;
-}
-
-.website {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 13px;
-  border-radius: 8px;
-  background: #0b4f7c;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.zoom-button {
-  padding: 9px 11px;
-  border: 0;
-  border-radius: 7px;
-  background: white;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 1px 5px rgba(0,0,0,.35);
-}
-
-@media (max-width: 760px) {
-  .map-layout {
-    height:auto;
-    grid-template-columns: 1fr;
-    grid-template-rows: 60vh auto;
-  }
-
-  #map {
-    min-height: 0;
-  }
-
-  .sidebar {
-    border-left: 0;
-    border-top: 1px solid #d9e2e8;
-  }
-}
+.church { cursor:pointer; }
+.church:hover { background:#eef6fa; }
+.church strong { display:block; }
+.church span { display:block; margin-top:3px; color:#657784; font-size:13px; }
+.website { display:inline-block; margin-top:10px; padding:10px 13px; border-radius:8px; background:#0b4f7c; color:white; text-decoration:none; font-weight:bold; }
+.zoom-button { padding:9px 11px; border:0; border-radius:7px; background:white; font-weight:bold; cursor:pointer; box-shadow:0 1px 5px rgba(0,0,0,.35); }
+@media (max-width:760px) { .map-layout { height:auto; grid-template-columns:1fr; grid-template-rows:60vh auto; } #map { min-height:0; } .sidebar { border-left:0; border-top:1px solid #d9e2e8; } }
 </style>
 </head>
-
 <body>
-
 <div id="app">
-
-<header>
-  <h1>Union of Christ Initiative</h1>
-
-</header>
-
+<header><h1>Union of Christ Initiative</h1></header>
 <main>
 <section class="resource-wrap">
-  <div class="top-resource-layout">
-    <div class="top-resource-main">
-      <div class="brand"><img src="UOC-banner.jpg" alt="Union of Christ Initiative"></div>
-      <h2 class="section-title">A Site To Help Pastors Equip Their Congregations</h2>
-      <div class="resource-grid">
+<div class="top-resource-layout"><div class="top-resource-main">
+<div class="brand"><img src="UOC-banner.jpg" alt="Union of Christ Initiative"></div>
+<h2 class="section-title">A Site To Help Pastors Equip Their Congregations</h2>
+<div class="resource-grid">
 <div class="resource-card"><div class="resource-icon" aria-hidden="true">✓</div><h2>Want to Know How Many People In Your Church Actually Voted in the Last General Election?</h2><p><a href="mailto:jim@akfamily.org?subject=Church%20Voter%20Participation%20Information">Click Here to Find out How You Can Do it Securely and Privately</a></p></div>
-    <div class="resource-card"><div class="resource-icon" aria-hidden="true">⚖</div><h2>Legal Information for Pastors</h2><p>Federal tax-law information concerning individual activity by religious leaders and the rules that apply to 501(c)(3) churches. <a href="https://www.irs.gov/pub/irs-pdf/p1828.pdf" target="_blank" rel="noopener noreferrer">IRS Publication 1828</a></p></div>
-    
-    
-    
-    
-    
-      </div>
-      <div class="pastor-feature-row">
-        <div class="pastor-feature">
-      <img src="./Zweifel%20Pic.png?v=2" alt="Pastor Mark Zweifel of True North Church">
-      <blockquote>
-        <p>“Hi pastors, I think it can be beneficial for pastors to be willing to share their personal voting choices. Here’s why I choose to do it.</p>
-        <p>When I share my voting list, I make it clear that these are my personal choices—not an endorsement from our church, our board, or our staff.</p>
-        <p>I do my due diligence. When possible, I meet with candidates personally, ask questions, research their positions and records, and consider where they stand on issues that intersect with my core biblical convictions.</p>
-        <p>I also don’t believe pastors need to be afraid of being transparent about where they personally land. We regularly encourage people to live out their biblical convictions in every area of life, and civic engagement is one of those areas.</p>
-        <p>That doesn’t mean everyone in our church has to vote exactly as I do. Thoughtful Christians can reach different conclusions. But I can be clear about my convictions while still respecting someone else’s conscience.</p>
-        <p>My goal is not to think for people, but to encourage them to pray, do their homework, think biblically, and vote according to their convictions and conscience.”</p>
-      </blockquote>
-      <div class="attribution">Pastor Mark Zweifel<br>True North Church<br>Fairbanks</div>
-    </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="map-heading"><div class="article-callout"><div class="article-label">Featured Article · NPR</div><a href="https://www.npr.org/2025/07/08/nx-s1-5460886/irs-now-says-pastors-can-endorse-political-candidates" target="_blank" rel="noopener noreferrer">“IRS now says pastors can endorse political candidates”<span class="read-more">Read the NPR Article →</span></a></div><h2 style="margin-top:18px;">Alaskan Pastors Who Are Personally Endorsing in the November 3rd General Election</h2>
-  <div class="subtitle">
-    Click a church marker for pastor, church, city and website.
-    Drag the map and use +/− or your mouse wheel to zoom.
-  </div>
-</section>
-<div class="map-layout">
-  <div id="map"></div>
-  <aside class="sidebar">
-    <div id="detail" class="detail pastor-count-box"><h2>Pastors Stepping Up To Date To Endorse</h2><div id="pastorCount" class="pastor-count">0</div><div class="pastor-count-label">Our Initial Goal - 100 Pastors Across Alaska</div></div>
-    <div id="churchList"></div>
-  </aside>
+<div class="resource-card"><div class="resource-icon" aria-hidden="true">⚖</div><h2>Legal Information for Pastors</h2><p>Federal tax-law information concerning individual activity by religious leaders and the rules that apply to 501(c)(3) churches. <a href="https://www.irs.gov/pub/irs-pdf/p1828.pdf" target="_blank" rel="noopener noreferrer">IRS Publication 1828</a></p></div>
 </div>
-
-<section class="resource-wrap">
-  <div class="contact-box">
-    <h2>Questions?</h2>
-    <div>Jim Minnery, President, Alaska Family Action, Inc.</div>
-    <div style="margin-top:7px;"><a href="tel:+19073177268">907-317-7268</a></div>
-    <div style="margin-top:5px;"><a href="mailto:jim@akfamily.org">jim@akfamily.org</a></div>
-  </div>
-  <div class="disclosure">THIS COMMUNICATION WAS PAID FOR BY ALASKA FAMILY ACTION, INC., ANCHORAGE, ALASKA. I AM JIM MINNERY, PRESIDENT OF ALASKA FAMILY ACTION, INC., AND I APPROVE THIS MESSAGE. THIS NOTICE TO VOTERS IS REQUIRED BY ALASKA LAW. WE CERTIFY THAT THIS COMMUNICATION IS NOT AUTHORIZED, PAID FOR, OR APPROVED BY ANY CANDIDATE BEING ENDORSED. WWW.AKFAMILY.ORG. 907-279-2825</div>
+<div class="pastor-feature-row"><div class="pastor-feature">
+<img src="./Zweifel%20Pic.png?v=2" alt="Pastor Mark Zweifel of True North Church">
+<blockquote>
+<p>“Hi pastors, I think it can be beneficial for pastors to be willing to share their personal voting choices. Here’s why I choose to do it.</p>
+<p>When I share my voting list, I make it clear that these are my personal choices—not an endorsement from our church, our board, or our staff.</p>
+<p>I do my due diligence. When possible, I meet with candidates personally, ask questions, research their positions and records, and consider where they stand on issues that intersect with my core biblical convictions.</p>
+<p>I also don’t believe pastors need to be afraid of being transparent about where they personally land. We regularly encourage people to live out their biblical convictions in every area of life, and civic engagement is one of those areas.</p>
+<p>That doesn’t mean everyone in our church has to vote exactly as I do. Thoughtful Christians can reach different conclusions. But I can be clear about my convictions while still respecting someone else’s conscience.</p>
+<p>My goal is not to think for people, but to encourage them to pray, do their homework, think biblically, and vote according to their convictions and conscience.”</p>
+</blockquote>
+<div class="attribution">Pastor Mark Zweifel<br>True North Church<br>Fairbanks</div>
+</div></div>
+</div></div>
 </section>
-</main>
-</div>
-
+<section class="map-heading"><div class="article-callout"><div class="article-label">Featured Article · NPR</div><a href="https://www.npr.org/2025/07/08/nx-s1-5460886/irs-now-says-pastors-can-endorse-political-candidates" target="_blank" rel="noopener noreferrer">“IRS now says pastors can endorse political candidates”<span class="read-more">Read the NPR Article →</span></a></div><h2 style="margin-top:18px;">Alaskan Pastors Who Are Personally Endorsing in the November 3rd General Election</h2><div class="subtitle">Click a church marker for pastor, church, city and website. Drag the map and use +/− or your mouse wheel to zoom.</div></section>
+<div class="map-layout"><div id="map"></div><aside class="sidebar"><div id="detail" class="detail pastor-count-box"><h2>Pastors Stepping Up To Date To Endorse</h2><div id="pastorCount" class="pastor-count">0</div><div class="pastor-count-label">Our Initial Goal - 100 Pastors Across Alaska</div></div><div id="churchList"></div></aside></div>
+<section class="resource-wrap"><div class="contact-box"><h2>Questions?</h2><div>Jim Minnery, President, Alaska Family Action, Inc.</div><div style="margin-top:7px;"><a href="tel:+19073177268">907-317-7268</a></div><div style="margin-top:5px;"><a href="mailto:jim@akfamily.org">jim@akfamily.org</a></div></div><div class="disclosure">THIS COMMUNICATION WAS PAID FOR BY ALASKA FAMILY ACTION, INC., ANCHORAGE, ALASKA. I AM JIM MINNERY, PRESIDENT OF ALASKA FAMILY ACTION, INC., AND I APPROVE THIS MESSAGE. THIS NOTICE TO VOTERS IS REQUIRED BY ALASKA LAW. WE CERTIFY THAT THIS COMMUNICATION IS NOT AUTHORIZED, PAID FOR, OR APPROVED BY ANY CANDIDATE BEING ENDORSED. WWW.AKFAMILY.ORG. 907-279-2825</div></section>
+</main></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
-
 const churches = [
-
-{
-  pastor: "Mark Zweifel",
-  church: "True North Church",
-  city: "Fairbanks",
-  address: "3295 College Road, Fairbanks, AK 99709",
-  website: "https://church.truenorthak.org/",
-  lat: 64.8566,
-  lng: -147.8125
-},
-
-{
-  pastor: "Ron Hoffman",
-  church: "Mountain City Church",
-  city: "Anchorage",
-  address: "6401 E Northern Lights Blvd, Anchorage, AK 99504",
-  website: "https://mountaincity.church/",
-  lat: 61.1957,
-  lng: -149.7685
-},
-
-{
-  pastor: "Jon Watson",
-  church: "Peninsula Christian Center",
-  city: "Soldotna",
-  address: "161 Farnsworth Blvd, Soldotna, AK 99669",
-  website: "https://www.penccalaska.org/",
-  lat: 60.4865,
-  lng: -151.0583
-},
-
-{
-  pastor: "Gabriel Webb",
-  church: "Response Church",
-  city: "Anchorage",
-  address: "630 E 5th Avenue, Anchorage, AK 99501",
-  website: "https://www.responsechurch.org/",
-  lat: 61.2177,
-  lng: -149.8734
-},
-
-{
-  pastor: "Prince Nwankudu",
-  church: "God's Family Church",
-  city: "Anchorage",
-  address: "4317 MacInnes Street, Anchorage, AK 99508",
-  website: "https://www.godsfamilyalaska.org/",
-  lat: 61.1818,
-  lng: -149.8098
-},
-
-{
-  pastor: "Victor Fonov",
-  church: "White Fields Church",
-  city: "Wasilla",
-  address: "4800 E Palmer-Wasilla Highway, Wasilla, AK 99654",
-  website: "https://www.whitefieldsalaska.com/",
-  lat: 61.5820,
-  lng: -149.3310
-},
-
-{
-  pastor: "Jason Perry",
-  church: "Valley Baptist",
-  city: "Palmer",
-  address: "1600 N Double B St, Palmer, AK 99645",
-  website: "https://www.vbtak.org/",
-  lat: 61.6175,
-  lng: -149.1285
-}
-
+{ pastor:"Mark Zweifel", church:"True North Church", city:"Fairbanks", address:"3295 College Road, Fairbanks, AK 99709", website:"https://church.truenorthak.org/", lat:64.8566, lng:-147.8125 },
+{ pastor:"Ron Hoffman", church:"Mountain City Church", city:"Anchorage", address:"6401 E Northern Lights Blvd, Anchorage, AK 99504", website:"https://mountaincity.church/", lat:61.1957, lng:-149.7685 },
+{ pastor:"Jon Watson", church:"Peninsula Christian Center", city:"Soldotna", address:"161 Farnsworth Blvd, Soldotna, AK 99669", website:"https://www.penccalaska.org/", lat:60.4865, lng:-151.0583 },
+{ pastor:"Gabriel Webb", church:"Response Church", city:"Anchorage", address:"630 E 5th Avenue, Anchorage, AK 99501", website:"https://www.responsechurch.org/", lat:61.2177, lng:-149.8734 },
+{ pastor:"Prince Nwankudu", church:"God's Family Church", city:"Anchorage", address:"4317 MacInnes Street, Anchorage, AK 99508", website:"https://www.godsfamilyalaska.org/", lat:61.1818, lng:-149.8098 },
+{ pastor:"Victor Fonov", church:"White Fields Church", city:"Wasilla", address:"4800 E Palmer-Wasilla Highway, Wasilla, AK 99654", website:"https://www.whitefieldsalaska.com/", lat:61.5820, lng:-149.3310 },
+{ pastor:"Jason Perry", church:"Valley Baptist", city:"Palmer", address:"1600 N Double B St, Palmer, AK 99645", website:"https://www.vbtak.org/", lat:61.6175, lng:-149.1285 },
+{ pastor:"Michael Rose", church:"Juneau Christian Center", city:"Juneau", address:"8001 Glacier Hwy, Juneau, AK 99801", website:"https://www.jccalaska.org/", lat:58.3550, lng:-134.5760 }
 ];
-
-const map = L.map("map", {
-  zoomControl: true
-}).setView([63.2, -151.0], 4);
-
-L.tileLayer(
-  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-  {
-    maxZoom: 19,
-    attribution:
-      '&copy; OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team'
-  }
-).addTo(map);
-
-const markers = [];
-
-document.getElementById("pastorCount").textContent = churches.length;
-
-function showChurch(index, zoomToChurch = false) {
-
-  const c = churches[index];
-
-  document.getElementById("detail").innerHTML = `
-    <h2>${c.church}</h2>
-    <div><strong>Pastor ${c.pastor}</strong></div>
-    <div>${c.city}, Alaska</div>
-    <div style="margin-top:7px;color:#657784;font-size:13px;">
-      ${c.address}
-    </div>
-    <a
-      class="website"
-      href="${c.website}"
-      target="_blank"
-      rel="noopener noreferrer">
-      Visit Church Website
-    </a>
-  `;
-
-  if (zoomToChurch) {
-    map.flyTo(
-      [c.lat, c.lng],
-      c.city === "Anchorage" ? 14 : 11,
-      { duration: 0.8 }
-    );
-  }
-
-  markers[index].openPopup();
-}
-
-churches.forEach((c, index) => {
-
-  const marker = L.marker([c.lat, c.lng])
-    .addTo(map)
-    .bindPopup(`
-      <strong>${c.church}</strong><br>
-      Pastor ${c.pastor}<br>
-      ${c.city}, Alaska<br><br>
-      <a href="${c.website}" target="_blank" rel="noopener noreferrer">
-        Visit website
-      </a>
-    `);
-
-  marker.on("click", function() {
-    showChurch(index, false);
-  });
-
-  markers.push(marker);
-
-  const card = document.createElement("div");
-
-  card.className = "church";
-
-  card.innerHTML = `
-    <strong>${c.church}</strong>
-    <span>Pastor ${c.pastor} · ${c.city}</span>
-  `;
-
-  card.onclick = function() {
-    showChurch(index, true);
-  };
-
-  document.getElementById("churchList").appendChild(card);
-
-});
-
-const anchorageMarkers = churches
-  .map((church, index) =>
-    church.city === "Anchorage" ? markers[index] : null
-  )
-  .filter(Boolean);
-
-const anchorageGroup = L.featureGroup(anchorageMarkers);
-
-const anchorageControl = L.control({
-  position: "topleft"
-});
-
-anchorageControl.onAdd = function() {
-
-  const container = L.DomUtil.create("div");
-
-  container.innerHTML =
-    '<button class="zoom-button">Zoom to Anchorage Churches</button>';
-
-  L.DomEvent.disableClickPropagation(container);
-
-  container.onclick = function() {
-
-    map.fitBounds(
-      anchorageGroup.getBounds().pad(0.35),
-      {
-        maxZoom: 13
-      }
-    );
-
-  };
-
-  return container;
-};
-
+const map=L.map("map",{zoomControl:true}).setView([63.2,-151.0],4);
+L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team'}).addTo(map);
+const markers=[];
+document.getElementById("pastorCount").textContent=churches.length;
+function showChurch(index,zoomToChurch=false){const c=churches[index];document.getElementById("detail").innerHTML=`<h2>${c.church}</h2><div><strong>Pastor ${c.pastor}</strong></div><div>${c.city}, Alaska</div><div style="margin-top:7px;color:#657784;font-size:13px;">${c.address}</div><a class="website" href="${c.website}" target="_blank" rel="noopener noreferrer">Visit Church Website</a>`;if(zoomToChurch){map.flyTo([c.lat,c.lng],c.city==="Anchorage"?14:11,{duration:.8});}markers[index].openPopup();}
+churches.forEach((c,index)=>{const marker=L.marker([c.lat,c.lng]).addTo(map).bindPopup(`<strong>${c.church}</strong><br>Pastor ${c.pastor}<br>${c.city}, Alaska<br><br><a href="${c.website}" target="_blank" rel="noopener noreferrer">Visit website</a>`);marker.on("click",()=>showChurch(index,false));markers.push(marker);const card=document.createElement("div");card.className="church";card.innerHTML=`<strong>${c.church}</strong><span>Pastor ${c.pastor} · ${c.city}</span>`;card.onclick=()=>showChurch(index,true);document.getElementById("churchList").appendChild(card);});
+const anchorageMarkers=churches.map((church,index)=>church.city==="Anchorage"?markers[index]:null).filter(Boolean);
+const anchorageGroup=L.featureGroup(anchorageMarkers);
+const anchorageControl=L.control({position:"topleft"});
+anchorageControl.onAdd=function(){const container=L.DomUtil.create("div");container.innerHTML='<button class="zoom-button">Zoom to Anchorage Churches</button>';L.DomEvent.disableClickPropagation(container);container.onclick=function(){map.fitBounds(anchorageGroup.getBounds().pad(.35),{maxZoom:13});};return container;};
 anchorageControl.addTo(map);
-
 </script>
-
 </body>
 </html>
